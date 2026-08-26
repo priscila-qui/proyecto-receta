@@ -1,17 +1,35 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
-  const token = req.cookies.get("sb-access-token"); // Supabase guarda el token en cookies
+export async function middleware(request: NextRequest) {
+  let response = NextResponse.next({ request });
 
-  // Rutas que requieren autenticación
-  const protectedRoutes = ["/dashboard"];
-
-  if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", req.url));
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, // usa la ANON KEY
+    {
+      cookies: {
+        getAll() { return request.cookies.getAll(); },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          );
+          response = NextResponse.next({ request });
+        },
+      },
     }
+  );
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Proteger /dashboard: sin sesión, redirige a /login
+  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  return NextResponse.next();
+  return response;
 }
+
+export const config = {
+  matcher: ["/dashboard/:path*"],
+};
