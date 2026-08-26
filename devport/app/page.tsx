@@ -1,8 +1,18 @@
-export default function HomePage() {
+export default function Home() {
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold">Bienvenida a la App de Recetas 🍲</h1>
-      <p>Explora recetas, guarda tus favoritas y comparte las tuyas.</p>
-    </div>
+    <main className="min-h-screen bg-gradient-to-r from-pink-400 via-yellow-300 to-green-400 flex flex-col items-center justify-center gap-6">
+      {/* Título principal */}
+      <h1 className="text-5xl font-bold text-white drop-shadow-lg">
+        Bienvenida a <span className="text-purple-700">RecetasApp</span>
+      </h1>
+      {/* Subtítulo */}
+      <p className="text-lg text-black max-w-md text-center font-medium">
+        Comparte tus recetas favoritas y descubre nuevas ideas culinarias.
+      </p>
+      {/* Botón principal */}
+      <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors shadow-lg">
+        Explorar recetas
+      </button>
+    </main>
   );
 }
