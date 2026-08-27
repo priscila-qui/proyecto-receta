@@ -1,0 +1,56 @@
+"use client";
+import { supabase } from "@/lib/supabase";
+import { useState } from "react";
+
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleLogin() {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      alert("Error: " + error.message);
+    } else {
+      alert("Login exitoso ✅");
+      window.location.href = "/dashboard"; // redirige al panel privado
+    }
+  }
+
+  return (
+    <section className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-slate-800 rounded-2xl p-8 shadow-xl">
+        {/* Título */}
+        <h1 className="text-2xl font-bold text-white mb-2">
+          Iniciar sesión
+        </h1>
+        <p className="text-slate-400 mb-8">
+          Accede a tu cuenta de RecetasApp
+        </p>
+
+        {/* Campos del formulario */}
+        <div className="flex flex-col gap-4">
+          <input
+            type="email"
+            placeholder="correo@ejemplo.com"
+            className="bg-slate-700 text-white rounded-lg px-4 py-3 border border-slate-600 focus:outline-none focus:border-blue-500"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            className="bg-slate-700 text-white rounded-lg px-4 py-3 border border-slate-600 focus:outline-none focus:border-blue-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition-colors"
+            onClick={handleLogin}
+          >
+            Iniciar sesión
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
