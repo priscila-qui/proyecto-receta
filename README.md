@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Proyecto Recetas 🍲
+Aplicación web full-stack para compartir y descubrir recetas.  
+Resuelve el problema de organizar recetas en línea, permitiendo a usuarios leer, crear y gestionar contenido gastronómico.
 
-## Getting Started
+🔗 Demo en vivo: https://proyecto-receta.vercel.app
 
-First, run the development server:
+---
 
+## 🛠️ Stack tecnológico
+- Next.js 14 (App Router)
+- TypeScript 5
+- Tailwind CSS 3
+- Supabase (PostgreSQL + Auth)
+- Vercel (deploy)
+
+---
+
+## 👥 Roles de usuario
+- **Lector**: puede ver recetas, guardar favoritas y comentar.  
+- **Chef**: puede crear, editar y eliminar sus propias recetas.  
+- **Admin**: gestiona usuarios y supervisa contenido.
+
+---
+
+## 🗂️ Modelo de datos
+Tablas en Supabase:
+- `users_profiles` → información extendida de usuarios  
+- `recipes` → recetas creadas por los chefs  
+- `comments` → comentarios de los lectores  
+
+Relaciones:
+- Un usuario tiene muchas recetas  
+- Una receta tiene muchos comentarios  
+
+---
+
+## ⚙️ Instalación local
 ```bash
+git clone https://github.com/priscila-qui/proyecto-receta.git
+cd proyecto-receta
+npm install
+cp .env.example .env.local # completar con tus claves
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-------------------------
+##Variables de entorno
+NEXT_PUBLIC_SUPABASE_URL
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+##Funcionalidades
+Diseño global con barra de navegación
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Página de inicio pública
 
-## Learn More
+Iniciar sesión y registro de usuarios
 
-To learn more about Next.js, take a look at the following resources:
+Listado y detalle de recetas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Panel de control privado
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Formulario de creación de recetas
 
-## Deploy on Vercel
+API interna con Supabase
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ CRUD completo (GET, POST, PUT, DELETE)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+Implementar en Vercel con dominio público
